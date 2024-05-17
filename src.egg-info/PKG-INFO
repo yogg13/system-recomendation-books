@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: src
+Version: 0.0.1
+Summary: A small package for Books Recommender System
+Home-page: https://github.com/project_kecerdasan_buatan/Books-Recommender-System
+Author: project_kecerdasan_buatan
+Author-email: pratamayoga@student.ittelkom-sby.ac.id
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: streamlit
+Requires-Dist: numpy
+
+Books-Recommender-System

@@ -1,0 +1,13 @@
+prefix=E:/learning-telu-sby/semester-4/kecerdasan-buatan/UAS/book-recomendation/condaenv/Library
+exec_prefix=E:/learning-telu-sby/semester-4/kecerdasan-buatan/UAS/book-recomendation/condaenv/Library
+libdir=E:/learning-telu-sby/semester-4/kecerdasan-buatan/UAS/book-recomendation/condaenv/Library/lib
+sharedlibdir=E:/learning-telu-sby/semester-4/kecerdasan-buatan/UAS/book-recomendation/condaenv/Library/lib
+includedir=E:/learning-telu-sby/semester-4/kecerdasan-buatan/UAS/book-recomendation/condaenv/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
