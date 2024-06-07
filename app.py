@@ -1,8 +1,8 @@
+from flask import Flask, request, jsonify, render_template
 import pickle
-import streamlit as st
 import numpy as np
 
-st.header('System Recomendation Books')
+app = Flask(__name__)
 
 # Load pickled data
 model = pickle.load(open('artifacts/model.pkl', 'rb'))
@@ -41,15 +41,19 @@ def recommend_book(book_name):
 
     return books_list, poster_urls
 
-selected_book = st.selectbox(
-    "Type or select a book from the dropdown",
-    book_names
-)
+@app.route('/')
+def index():
+    return render_template('index.html', book_names=book_names)
 
-if st.button('Show Recommendation'):
-    recommended_books, poster_urls = recommend_book(selected_book)
-    cols = st.columns(5)
-    for i in range(1, 6):
-        with cols[i-1]:
-            st.text(recommended_books[i])
-            st.image(poster_urls[i])
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    data = request.json
+    book_name = data['book_name']
+    recommended_books, poster_urls = recommend_book(book_name)
+    return jsonify({
+        'recommended_books': recommended_books,
+        'poster_urls': poster_urls
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)

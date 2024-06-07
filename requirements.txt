@@ -1,5 +1,6 @@
-streamlit
+Flask
 numpy
+pandas
 scikit-learn
 
 #Lokal Package

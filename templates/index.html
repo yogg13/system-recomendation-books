@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Book Recommendation System</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="bg-gray-100">
+		<div class="container mx-24 p-4">
+			<h1 class="text-3xl font-bold mb-4 text-indigo-900"
+				>System Recommendation Books</h1
+			>
+			<div class="mb-4">
+				<select id="book-select" class="form-select mt-1 block w-3/6">
+					{% for book in book_names %}
+					<option class="mx-auto w-3/6" value="{{ book }}">{{ book }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<button
+				id="recommend-btn"
+				class="bg-indigo-900 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+				>Show Recommendation</button
+			>
+			<div
+				id="recommendations"
+				class="mt-4 grid grid-flow-row-dense grid-cols-6 gap-4"></div>
+		</div>
+
+		<script>
+			document
+				.getElementById("recommend-btn")
+				.addEventListener("click", function () {
+					var selectedBook = document.getElementById("book-select").value;
+
+					fetch("/recommend", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ book_name: selectedBook }),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							var recommendationsDiv =
+								document.getElementById("recommendations");
+							recommendationsDiv.innerHTML = "";
+							for (var i = 1; i < data.recommended_books.length; i++) {
+								var bookDiv = document.createElement("div");
+								bookDiv.classList.add("text-center");
+
+								var bookImage = document.createElement("img");
+								bookImage.src = data.poster_urls[i];
+								bookImage.classList.add("w-full", "object-contain", "mb-2");
+
+								var bookTitle = document.createElement("p");
+								bookTitle.classList.add("font-bold");
+								bookTitle.textContent = data.recommended_books[i];
+
+								bookDiv.appendChild(bookImage);
+								bookDiv.appendChild(bookTitle);
+
+								recommendationsDiv.appendChild(bookDiv);
+							}
+						})
+						.catch((error) => {
+							console.error("Error:", error);
+						});
+				});
+		</script>
+	</body>
+</html>
